@@ -529,7 +529,7 @@ with st.expander("📈 ST Slope"):
                 **Flat** → May indicate heart disease.
 
                 **Down** → Higher cardiovascular risk.
-                """)
+                """)    
 
 with st.expander("📉 Old Peak"):
 
