@@ -388,8 +388,6 @@ input_df = input_df.reindex(columns=columns, fill_value=0)
 scaled_input = scaler.transform(input_df)
 
 
-
-
 st.write("")
 st.write("")
 
@@ -398,3 +396,87 @@ predict = st.button(
     use_container_width=True,
     type="primary"
 )
+
+
+
+if predict:
+
+    with st.spinner("Analyzing patient data..."):
+        prediction = model.predict(scaled_input)[0]
+        probability = None
+
+        if hasattr(model, "predict_proba"):
+            probability = model.predict_proba(scaled_input)[0]
+
+        st.write("")
+        st.divider()
+        st.subheader("Prediction Result")
+
+        if prediction == 0:
+            st.markdown(
+                """
+                <div class="low-risk">
+                <h2>🟢 Low Risk</h2>
+                <h4>
+                    The model predicts a lower likelihood of heart disease.
+                </h4>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )   
+
+        else:
+            st.markdown(
+                """
+                <div class="high-risk">
+                <h2>🔴 High Risk</h2>
+                <h4>
+                The model predicts a higher likelihood of heart disease.
+                Please consult a qualified healthcare professional.
+                </h4>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
+        if probability is not None:
+
+            st.write("")
+            st.subheader("Prediction Confidence")
+
+            healthy = probability[0]
+            disease = probability[1]
+
+            st.write("🟢 Healthy")
+            st.progress(float(healthy))
+            st.write(f"{healthy*100:.2f}%")
+
+            st.write("")
+            st.write("🔴 Heart Disease")
+            st.progress(float(disease))
+            st.write(f"{disease*100:.2f}%")
+
+            st.write("")
+
+            c1, c2 = st.columns(2)
+
+            with c1:
+                st.metric(
+                    "Healthy Probability",
+                    f"{healthy*100:.2f}%"
+                )
+
+            with c2:
+                st.metric(
+                    "Disease Probability",
+                    f"{disease*100:.2f}%"
+                )
+
+        st.warning(
+            """
+                ⚠️ This prediction is generated using a Machine Learning model and should not
+                replace professional medical advice or diagnosis.
+
+                Always consult a qualified healthcare professional.
+            """
+        )
