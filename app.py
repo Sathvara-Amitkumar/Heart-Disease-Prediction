@@ -480,3 +480,61 @@ if predict:
                 Always consult a qualified healthcare professional.
             """
         )
+
+
+# =====================================
+# FEATURE INFORMATION
+# =====================================
+
+st.write("")
+st.divider()
+
+st.subheader("📚 Understand the Medical Features")
+
+with st.expander("🫀 Chest Pain Type"):
+
+    st.markdown("""
+                **ATA** – Atypical Angina
+
+                **NAP** – Non-Anginal Pain
+
+                **TA** – Typical Angina
+
+                **ASY** – Asymptomatic
+                """)
+
+with st.expander("❤️ Resting ECG"):
+
+    st.markdown("""
+                **Normal** – Normal ECG
+
+                **ST** – ST-T Wave Abnormality
+
+                **LVH** – Left Ventricular Hypertrophy
+                """)
+
+with st.expander("🏃 Exercise Angina"):
+
+    st.markdown("""
+                **Y** → Chest pain occurs during exercise.
+
+                **N** → No chest pain during exercise.
+                """)
+
+with st.expander("📈 ST Slope"):
+
+    st.markdown("""
+                **Up** → Generally healthier.
+
+                **Flat** → May indicate heart disease.
+
+                **Down** → Higher cardiovascular risk.
+                """)
+
+with st.expander("📉 Old Peak"):
+
+    st.markdown("""
+                Old Peak measures ST depression caused by exercise.
+
+                Higher values generally indicate increased heart disease risk.
+                """)
