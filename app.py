@@ -127,15 +127,14 @@ with st.sidebar:
     st.subheader("⚙️ Tech Stack")
 
     st.markdown("""
-- Python
-- Pandas
-- NumPy
-- Scikit-learn
-- Streamlit
-""")
+                - Python
+                - Pandas
+                - NumPy
+                - Scikit-learn
+                - Streamlit
+                """)
 
     st.divider()
-
     st.subheader("🔗 Project")
 
     st.link_button(
@@ -149,19 +148,98 @@ with st.sidebar:
     )
 
     st.divider()
-
     st.info(
         """
-This prediction is generated using a trained
-Machine Learning model and is intended for
-educational purposes only.
+            This prediction is generated using a trained
+            Machine Learning model and is intended for
+            educational purposes only.
 
-It is **not** a medical diagnosis.
-"""
+            It is **not** a medical diagnosis.
+        """
     )
 
     st.divider()
-
     st.caption(
         "Developed by\n\n**Amitkumar Sathvara**"
     )
+
+
+# =====================================
+# HERO SECTION
+# =====================================
+
+st.markdown(
+    """
+    <div class="main-title">
+        ❤️ Heart Disease Prediction System
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+
+st.write("")
+
+
+
+# Part - 4
+
+# =====================================
+# SESSION STATE
+# =====================================
+
+DEFAULT_VALUES = {
+    "age": 30,
+    "sex": "Male",
+    "resting_bp": 120,
+    "cholesterol": 200,
+    "fasting_bs": 0,
+    "max_hr": 150,
+    "oldpeak": 1.0,
+    "chest_pain": "ATA",
+    "resting_ecg": "Normal",
+    "exercise_angina": "N",
+    "st_slope": "Up"
+}
+
+if "initialized" not in st.session_state:
+    for key, value in DEFAULT_VALUES.items():
+        st.session_state[key] = value
+    st.session_state.initialized = True
+
+
+def load_healthy_example():
+
+    st.session_state.age = 28
+    st.session_state.sex = "Female"
+    st.session_state.resting_bp = 110
+    st.session_state.cholesterol = 170
+    st.session_state.fasting_bs = 0
+    st.session_state.max_hr = 180
+    st.session_state.oldpeak = 0.2
+    st.session_state.chest_pain = "ATA"
+    st.session_state.resting_ecg = "Normal"
+    st.session_state.exercise_angina = "N"
+    st.session_state.st_slope = "Up"
+
+def load_high_risk():
+
+    st.session_state.age = 65
+    st.session_state.sex = "Male"
+    st.session_state.resting_bp = 170
+    st.session_state.cholesterol = 320
+    st.session_state.fasting_bs = 1
+    st.session_state.max_hr = 90
+    st.session_state.oldpeak = 4.5
+    st.session_state.chest_pain = "ASY"
+    st.session_state.resting_ecg = "ST"
+    st.session_state.exercise_angina = "Y"
+    st.session_state.st_slope = "Flat"
+
+
+def reset_form():
+
+    for key, value in DEFAULT_VALUES.items():
+        st.session_state[key] = value
+
+
+st.write("")
