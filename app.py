@@ -243,3 +243,158 @@ def reset_form():
 
 
 st.write("")
+
+
+
+btn1, btn2, btn3 = st.columns(3)
+
+with btn1:
+    st.button(
+        "🟢 Healthy Example",
+        use_container_width=True,
+        on_click=load_healthy_example
+    )
+
+with btn2:
+    st.button(
+        "🔴 High Risk Example",
+        use_container_width=True,
+        on_click=load_high_risk
+    )
+
+with btn3:
+    st.button(
+        "🔄 Reset",
+        use_container_width=True,
+        on_click=reset_form
+    )
+
+st.write("")
+
+
+# Form
+
+left, right = st.columns(2)
+
+with left:
+
+    age = st.slider(
+        "Age",
+        18,
+        100,
+        key="age"
+    )
+
+    resting_bp = st.number_input(
+        "Resting Blood Pressure",
+        50,
+        250,
+        key="resting_bp"
+    )
+
+    cholesterol = st.number_input(
+        "Cholesterol",
+        0,
+        700,
+        key="cholesterol"
+    )
+
+    max_hr = st.slider(
+        "Maximum Heart Rate",
+        60,
+        220,
+        key="max_hr"
+    )
+
+    oldpeak = st.slider(
+        "Old Peak",
+        0.0,
+        10.0,
+        step=0.1,
+        key="oldpeak"
+    )
+
+with right:
+
+    sex = st.selectbox(
+        "Sex",
+        ["Male", "Female"],
+        key="sex"
+    )
+
+    fasting_bs = st.selectbox(
+        "Fasting Blood Sugar >120",
+        [0,1],
+        key="fasting_bs"
+    )
+
+    chest_pain = st.selectbox(
+        "Chest Pain Type",
+        ["ATA","NAP","TA","ASY"],
+        key="chest_pain"
+    )
+
+    resting_ecg = st.selectbox(
+        "Resting ECG",
+        ["Normal","ST","LVH"],
+        key="resting_ecg"
+    )
+
+    exercise_angina = st.selectbox(
+        "Exercise Angina",
+        ["N","Y"],
+        key="exercise_angina"
+    )
+
+    st_slope = st.selectbox(
+        "ST Slope",
+        ["Up","Flat","Down"],
+        key="st_slope"
+    )
+
+
+
+# =====================================
+# PREPARE INPUT
+# =====================================
+
+input_data = {
+    "Age": age,
+    "RestingBP": resting_bp,
+    "Cholesterol": cholesterol,
+    "FastingBS": fasting_bs,
+    "MaxHR": max_hr,
+    "Oldpeak": oldpeak,
+
+    "Sex_M": 1 if sex == "Male" else 0,
+
+    "ChestPainType_ATA": 1 if chest_pain == "ATA" else 0,
+    "ChestPainType_NAP": 1 if chest_pain == "NAP" else 0,
+    "ChestPainType_TA": 1 if chest_pain == "TA" else 0,
+
+    "RestingECG_Normal": 1 if resting_ecg == "Normal" else 0,
+    "RestingECG_ST": 1 if resting_ecg == "ST" else 0,
+
+    "ExerciseAngina_Y": 1 if exercise_angina == "Y" else 0,
+
+    "ST_Slope_Flat": 1 if st_slope == "Flat" else 0,
+    "ST_Slope_Up": 1 if st_slope == "Up" else 0,
+}
+
+input_df = pd.DataFrame([input_data])
+
+input_df = input_df.reindex(columns=columns, fill_value=0)
+
+scaled_input = scaler.transform(input_df)
+
+
+
+
+st.write("")
+st.write("")
+
+predict = st.button(
+    "❤️ Predict Heart Disease",
+    use_container_width=True,
+    type="primary"
+)
